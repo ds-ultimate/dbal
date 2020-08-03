@@ -351,6 +351,10 @@ class MySQLPlatform extends AbstractPlatform
      */
     public function getListTableColumnsSQL($table, $database = null)
     {
+        if (strpos($table, '.') !== false) {
+            $database = substr($table, 0, strpos($table, '.'));
+            $table = substr($table, strpos($table, '.') + 1);
+        }
         $table = $this->quoteStringLiteral($table);
 
         if ($database !== null) {
